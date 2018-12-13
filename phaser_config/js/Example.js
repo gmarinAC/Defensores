@@ -12,7 +12,10 @@ class Example extends Phaser.Scene{
 
         console.log(this.fondoJuego);
 
-        this.nave = this.add.image(400,552,'nave'); 
+        this.nave = this.add.image(400,552,'nave');
+        this.nave = this.add.image(config.width/2,config.height/2,'nave');
+        console.log('this.nave.width'+this.nave.width);
+        console.log('config'+JSON.stringify(config));
         this.key_A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.key_D = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.key_W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -21,9 +24,7 @@ class Example extends Phaser.Scene{
         this.input.keyboard.on('keyup_K' ,(event)=>{
             var bala = this.physics.add.image(this.nave.x, this.nave.y, 'bala');
             bala.setVelocity(0,-1000);
-            console.log('bala.y'+bala.y);
             setTimeout(()=>{
-                console.log('bandera2');
                 bala.destroy();
             },1000);
         },this)
@@ -35,17 +36,25 @@ class Example extends Phaser.Scene{
 
         // Movimiento
         if(this.key_A.isDown){
-            this.nave.x-=10;
+            if (this.nave.x>(this.nave.width/3)){
+                this.nave.x-=10;
+            }
+            
         }else if(this.key_D.isDown){
+           if(this.nave.x<(config.width-this.nave.width/3)){
             this.nave.x+=10;
+           }     
         }else if(this.key_W.isDown){
-            this.nave.y-=10;
+            if(this.nave.y>(0+this.nave.height/3)){
+                this.nave.y-=10;
+            }       
         }else if(this.key_S.isDown){
-            this.nave.y+=10;
+            if(this.nave.y<(config.height-this.nave.height/3)){
+                this.nave.y+=10;
+            }
+            
         }
-    }
-    
-
+    }   
  }
 
  function destroySprite (sprite) {
