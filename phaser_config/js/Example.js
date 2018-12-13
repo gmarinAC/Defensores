@@ -4,11 +4,13 @@ class Example extends Phaser.Scene{
     }
     preload(){
         this.load.image('nave','assets/nave.png');    
-        this.load.image('bala','assets/bala.png');   
+        this.load.image('bala','assets/bala.png');  
     }
     create(){
         this.nave = this.add.image(config.width/2,config.height/2,'nave');
         console.log('this.nave.width'+this.nave.width); 
+        var enemigo =  this.physics.add.image(config.width/2,-10,'bala');
+        enemigo.setVelocity(0,200);
         /*
         this.input.keyboard.on('keyup_D',(event)=>{
             this.image.x += 10;
@@ -26,7 +28,8 @@ class Example extends Phaser.Scene{
             setTimeout(()=>{
                 bala.destroy();
             },1000);
-        },this)
+        },this);
+        
     }
 
     update(delta){
