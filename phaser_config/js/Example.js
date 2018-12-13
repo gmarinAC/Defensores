@@ -11,28 +11,14 @@ class Example extends Phaser.Scene{
     }
     create(){
         this.fondoJuego = this.add.tileSprite(400, 300, config.width, config.height, 'background');
-
-        console.log(this.fondoJuego);
-
-        this.nave = this.add.image(config.width/2,config.height/2,'nave');
-
-        console.log('this.nave.width'+this.nave.width); 
-        var enemigo =  this.physics.add.image(config.width/2,-10,'bala');
-        enemigo.setVelocity(0,200);
-        /*
-        this.input.keyboard.on('keyup_D',(event)=>{
-            this.image.x += 10;
-        });
-        */
-       console.log('config'+JSON.stringify(config));
-
+        this.nave = this.add.image(config.width/2,552,'nave');
         this.key_A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.key_D = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.key_W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.key_S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     
         this.input.keyboard.on('keyup_K' ,(event)=>{
-            var bala = this.physics.add.image(this.nave.x, this.nave.y, 'bala');
+            var bala = this.physics.add.image(this.nave.x, this.nave.y - 28, 'bala');
             bala.setVelocity(0,-1000);
             setTimeout(()=>{
                 bala.destroy();
@@ -47,20 +33,20 @@ class Example extends Phaser.Scene{
 
         // Movimiento
         if(this.key_A.isDown){
-            if (this.nave.x>(this.nave.width/3)){
+            if (this.nave.x > (this.nave.width/2)){
                 this.nave.x-=10;
             }
             
         }else if(this.key_D.isDown){
-           if(this.nave.x<(config.width-this.nave.width/3)){
+           if(this.nave.x < (config.width - this.nave.width/2)){
             this.nave.x+=10;
            }     
         }else if(this.key_W.isDown){
-            if(this.nave.y>(0+this.nave.height/3)){
+            if(this.nave.y > (this.nave.height/2)){
                 this.nave.y-=10;
             }       
         }else if(this.key_S.isDown){
-            if(this.nave.y<(config.height-this.nave.height/3)){
+            if(this.nave.y < (config.height - this.nave.height/2)){
                 this.nave.y+=10;
             }
             
