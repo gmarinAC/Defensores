@@ -17,13 +17,24 @@ class Example extends Phaser.Scene{
         this.key_W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.key_S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     
+    
+         this.enemigos=[];
+        setInterval(()=>{
+            this.enemigo = this.physics.add.image(getRandomArbitrary(0, config.width), -10,'bala');
+            this.enemigo.setVelocity(0,200);
+            //this.enemigos.push(enemigo);
+        },1500);
+
         this.input.keyboard.on('keyup_K' ,(event)=>{
-            var bala = this.physics.add.image(this.nave.x, this.nave.y - 28, 'bala');
-            bala.setVelocity(0,-1000);
+            this.bala = this.physics.add.image(this.nave.x, this.nave.y - 28, 'bala');
+            this.bala.enableBody = true;
+            this.bala.physicsBodyType = Phaser.Physics.ARCADE;
+            this.bala.setVelocity(0,-1000);
             setTimeout(()=>{
-                bala.destroy();
+                this.bala.destroy();
             },1000);
         },this);
+        setTimeout(()=>{},1001)
         
     }
 
@@ -51,6 +62,9 @@ class Example extends Phaser.Scene{
             }
             
         }
+        if(this.bala && this.enemigo){
+            this.physics.add.overlap(this.bala,this.enemigo,colisionEnemigo);
+        }
     }   
  }
 
@@ -59,3 +73,10 @@ class Example extends Phaser.Scene{
     sprite.destroy();
 
 }
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+  function colisionEnemigo(bala, enemigo){
+    bala.destroy();
+    enemigo.destroy();
+  }
