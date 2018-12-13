@@ -4,10 +4,18 @@ class Example extends Phaser.Scene{
     }
     preload(){
         this.load.image('nave','assets/nave.png');    
-        this.load.image('bala','assets/bala.png');  
+
+        this.load.image('bala','assets/bala.png');
+        this.load.image('background', 'assets/background.jpg');   
+
     }
     create(){
+        this.fondoJuego = this.add.tileSprite(400, 300, config.width, config.height, 'background');
+
+        console.log(this.fondoJuego);
+
         this.nave = this.add.image(config.width/2,config.height/2,'nave');
+
         console.log('this.nave.width'+this.nave.width); 
         var enemigo =  this.physics.add.image(config.width/2,-10,'bala');
         enemigo.setVelocity(0,200);
@@ -17,6 +25,7 @@ class Example extends Phaser.Scene{
         });
         */
        console.log('config'+JSON.stringify(config));
+
         this.key_A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.key_D = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         this.key_W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -33,6 +42,10 @@ class Example extends Phaser.Scene{
     }
 
     update(delta){
+        // Fondo
+        this.fondoJuego.tilePositionY -= 1;
+
+        // Movimiento
         if(this.key_A.isDown){
             if (this.nave.x>(this.nave.width/3)){
                 this.nave.x-=10;
@@ -54,6 +67,7 @@ class Example extends Phaser.Scene{
         }
     }   
  }
+
  function destroySprite (sprite) {
 
     sprite.destroy();
